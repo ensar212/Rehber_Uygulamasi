@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+
+import '../model/kisi.dart';
+
+class KisiDetay extends StatefulWidget { 
+ Kisi kisi;
+ KisiDetay(this.kisi);
+
+  
+
+  @override
+  State<KisiDetay> createState() => _KisiDetayState();
+}
+
+class _KisiDetayState extends State<KisiDetay> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.kisi.AD)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           ClipRRect(borderRadius: BorderRadius.circular(150.0),
+           child: FadeInImage.assetNetwork(placeholder: "resimler/image.png", image: widget.kisi.RESIM_URL,fit: BoxFit.cover, width: 300, height: 300,) ,
+           ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.kisi.AD,style: TextStyle(fontSize: 20),),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.kisi.SOYAD,style: TextStyle(fontSize: 20)),
+            ),
+            Text(widget.kisi.TELEFON_NUMARASI,style: TextStyle(fontSize: 18,
+            fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ),
+    
+    );
+  }
+}
