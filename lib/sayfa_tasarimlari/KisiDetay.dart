@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/kisi.dart';
 
@@ -34,6 +35,14 @@ class _KisiDetayState extends State<KisiDetay> {
             ),
             Text(widget.kisi.TELEFON_NUMARASI,style: TextStyle(fontSize: 18,
             fontWeight: FontWeight.bold)),
+            SizedBox(child: ElevatedButton(onPressed: () async {
+              final call = Uri.parse('tel:${widget.kisi.TELEFON_NUMARASI}');
+              if (await canLaunchUrl(call)) {
+                launchUrl(call);
+              }else{
+                throw 'Could not launch $call';
+              }
+            }, child: Text("Ara")))
           ],
         ),
       ),

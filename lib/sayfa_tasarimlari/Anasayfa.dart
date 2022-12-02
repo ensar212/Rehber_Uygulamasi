@@ -28,7 +28,7 @@ class _AnasayfaState extends State<Anasayfa> {
   @override
   void initState() {
    super.initState();
-  KisileriListele();
+   KisileriListele();
   }
   
   bool aramaYapiliyorMu = false;
@@ -36,7 +36,7 @@ class _AnasayfaState extends State<Anasayfa> {
   
  
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return  Scaffold(
       appBar: AppBar(
         title: aramaYapiliyorMu ? SizedBox(height: 50,
@@ -67,23 +67,26 @@ class _AnasayfaState extends State<Anasayfa> {
           }, icon:aramaYapiliyorMu ? Icon(Icons.cancel, color: Colors.lightGreen[100],) : Icon(Icons.search, color: Colors.lightGreen[100],)),
         ],
         ),
-        body: FutureBuilder<List<Kisi>>(
-        future: aramaYapiliyorMu ? kisiAra(aramaKelimesi) : KisileriListele(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            var rehberListesi = snapshot.data;
-            
-            return ListView.builder(
-              itemCount: rehberListesi!.length,
-              itemBuilder: (context, index) {
-                var kisi = rehberListesi[index];
-                return CardKisi(kisi); 
-              },
-              );
-          } else {
-            return Center();
-          }
-        }),
+        body:Container(
+          child: FutureBuilder<List<Kisi>>(
+          future: aramaYapiliyorMu ? kisiAra(aramaKelimesi) : KisileriListele(),
+          builder: ((context, snapshot) {
+            if (snapshot.hasData) {
+              var rehberListesi = snapshot.data;
+              
+              
+              return ListView.builder(
+                itemCount: rehberListesi!.length,
+                itemBuilder: (context, index) {
+                  var kisi = rehberListesi[index];
+                  return CardKisi(kisi); 
+                },
+                );
+            } else {
+              return Center();
+            }
+          }),
+          ),
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder:(context) => KisiKayit()));
