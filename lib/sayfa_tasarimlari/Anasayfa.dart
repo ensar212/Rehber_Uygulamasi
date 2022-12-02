@@ -22,6 +22,7 @@ class _AnasayfaState extends State<Anasayfa> {
     var aramaSonucuGelenListe = await KisiDAO().kisiAra(aramaMetni);
     return aramaSonucuGelenListe;
   } 
+ 
 
   
 
@@ -29,6 +30,7 @@ class _AnasayfaState extends State<Anasayfa> {
   void initState() {
    super.initState();
    KisileriListele();
+   
   }
   
   bool aramaYapiliyorMu = false;
@@ -67,26 +69,23 @@ class _AnasayfaState extends State<Anasayfa> {
           }, icon:aramaYapiliyorMu ? Icon(Icons.cancel, color: Colors.lightGreen[100],) : Icon(Icons.search, color: Colors.lightGreen[100],)),
         ],
         ),
-        body:Container(
-          child: FutureBuilder<List<Kisi>>(
-          future: aramaYapiliyorMu ? kisiAra(aramaKelimesi) : KisileriListele(),
-          builder: ((context, snapshot) {
-            if (snapshot.hasData) {
-              var rehberListesi = snapshot.data;
-              
-              
+        body:FutureBuilder<List<Kisi>>(
+        future:aramaYapiliyorMu ? kisiAra(aramaKelimesi) : KisileriListele(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            var rehberListesi = snapshot.data;
+            
               return ListView.builder(
-                itemCount: rehberListesi!.length,
-                itemBuilder: (context, index) {
-                  var kisi = rehberListesi[index];
-                  return CardKisi(kisi); 
-                },
-                );
-            } else {
-              return Center();
-            }
-          }),
-          ),
+              itemCount: rehberListesi!.length,
+              itemBuilder: (context, index) {
+                var kisi = rehberListesi[index];
+                return CardKisi(kisi); 
+              },
+              );
+          } else {
+            return Center();
+          }
+        }),
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder:(context) => KisiKayit()));
@@ -117,7 +116,7 @@ class CardKisi extends StatelessWidget {
                           Text(kisi.AD,style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                           Text(" ${kisi.SOYAD}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
                         ],
-                      ),
+                    ),
                     ),
                   ),
     );

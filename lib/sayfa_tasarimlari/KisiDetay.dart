@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rehber_project/dao/KisiDAO.dart';
+import 'package:rehber_project/sayfa_tasarimlari/Anasayfa.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../model/kisi.dart';
@@ -14,10 +16,19 @@ class KisiDetay extends StatefulWidget {
 }
 
 class _KisiDetayState extends State<KisiDetay> {
+  Future<void> kisiSil(int silID) async {
+    await KisiDAO().kisiSil(silID);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => Anasayfa()));
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.kisi.AD)),
+      appBar: AppBar(title: Text(widget.kisi.AD), actions: [
+        IconButton(onPressed: (){
+          kisiSil(widget.kisi.ID);
+        }, icon: Icon(Icons.delete))
+      ],),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,11 +49,12 @@ class _KisiDetayState extends State<KisiDetay> {
             SizedBox(child: ElevatedButton(onPressed: () async {
               final call = Uri.parse('tel:${widget.kisi.TELEFON_NUMARASI}');
               if (await canLaunchUrl(call)) {
-                launchUrl(call);
+            launchUrl(call);
               }else{
-                throw 'Could not launch $call';
+            throw 'Could not launch $call';
               }
-            }, child: Text("Ara")))
+            }, child:Text("Ara"))),
+            
           ],
         ),
       ),

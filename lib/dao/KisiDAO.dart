@@ -46,4 +46,9 @@ class KisiDAO {
     
   }
 
+  Future<void> kisiSil(int silID) async {
+    var db = await VeritabaniYardimcisi.databaseErisim();
+    await db.rawQuery("DELETE FROM kisiler WHERE ID =$silID");
+  }
+
 }
